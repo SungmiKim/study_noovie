@@ -20,6 +20,8 @@ export default ({ navigation, route }) => {
       headerShown: true,
       headerStyle: {
         backgroundColor: "black",
+        borderBottomColor: "black",
+        shadowColor: "black",
       },
     });
   }, [route]);

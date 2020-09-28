@@ -10,7 +10,7 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const SliderContainer = styled.View`
   width: ${WIDTH}px;
-  height: ${HEIGHT / 4}px;
+  height: ${HEIGHT / 3}px;
   margin-bottom: 40px;
 `;
 
@@ -47,12 +47,12 @@ export default ({ loading, nowPlaying, popular }) => (
         </SliderContainer>
         <Container>
           <Title title={"Popular Movies"} />
-          <ScrollView horizontal>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {popular.map((movie) => (
               <Vertical
                 key={movie.id}
                 poster={movie.poster_path}
-                title={movie.original_title}
+                title={movie.title}
                 votes={movie.vote_average}
               />
             ))}
