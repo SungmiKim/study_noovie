@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const TMDB_KEY = "4b16d7febba34bde18a917f8e2c9c372";
-
+const TMDB_KEY = "10923b261ba94d897ac6b81148314a3f";
 const makeRequest = (path, params) =>
   axios.get(`https://api.themoviedb.org/3${path}`, {
     params: {
@@ -9,7 +7,6 @@ const makeRequest = (path, params) =>
       api_key: TMDB_KEY,
     },
   });
-
 const getAnything = async (path, params = {}) => {
   try {
     const {
@@ -18,10 +15,10 @@ const getAnything = async (path, params = {}) => {
     } = await makeRequest(path, params);
     return [results || data, null];
   } catch (e) {
+    console.log(e);
     return [null, e];
   }
 };
-
 export const movieApi = {
   nowPlaying: () => getAnything("/movie/now_playing"),
   popular: () => getAnything("/movie/popular"),
@@ -30,7 +27,6 @@ export const movieApi = {
   movie: (id) => getAnything(`/movie/${id}`),
   discover: () => getAnything("/discover/movie"),
 };
-
 export const tvApi = {
   today: () => getAnything("/tv/airing_today"),
   thisWeek: () => getAnything("/tv/on_the_air"),
@@ -39,3 +35,5 @@ export const tvApi = {
   search: (query) => getAnything("/search/tv", { query }),
   show: (id) => getAnything(`/tv/${id}`),
 };
+
+export const apiImage = (path) => `https://image.tmdb.org/t/p/w500${path}`;

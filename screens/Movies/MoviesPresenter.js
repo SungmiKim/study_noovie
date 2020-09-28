@@ -1,36 +1,64 @@
 import React from "react";
 import styled from "styled-components/native";
 import Swiper from "react-native-web-swiper";
-import { Dimensions } from "react-native";
+import { ActivityIndicator, ScrollView, Dimensions } from "react-native";
+import Slide from "../../components/Movies/Slide";
+import Title from "../../components/Title";
+import Vertical from "../../components/Vertical";
 
-const { width, height } = Dimensions.get("screen");
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
-const Header = styled.View`
-  width: 100%;
-  height: ${height / 3}px;
+const SliderContainer = styled.View`
+  width: ${WIDTH}px;
+  height: ${HEIGHT / 4}px;
+  margin-bottom: 40px;
 `;
 
-const Section = styled.View`
-  background-color: red;
-  height: 100%;
-`;
+const Container = styled.View``;
 
-const Text = styled.Text``;
-
-export default () => {
-  return (
-    <Header>
-      <Swiper>
-        <Section>
-          <Text>Hello</Text>
-        </Section>
-        <Section>
-          <Text>Hello</Text>
-        </Section>
-        <Section>
-          <Text>Hello</Text>
-        </Section>
-      </Swiper>
-    </Header>
-  );
-};
+export default ({ loading, nowPlaying, popular }) => (
+  <ScrollView
+    style={{
+      backgroundColor: "black",
+    }}
+    contentContainerStyle={{
+      flex: 1,
+      justifyContent: loading ? "center" : "flex-start",
+    }}
+  >
+    {loading ? (
+      <ActivityIndicator color="white" size="small" />
+    ) : (
+      <>
+        <SliderContainer>
+          <Swiper controlsEnabled={false} loop timeout={3}>
+            {nowPlaying.map((movie) => (
+              <Slide
+                key={movie.id}
+                id={movie.id}
+                title={movie.original_title}
+                overview={movie.overview}
+                votes={movie.vote_average}
+                backgroundImage={movie.backdrop_path}
+                poster={movie.poster_path}
+              />
+            ))}
+          </Swiper>
+        </SliderContainer>
+        <Container>
+          <Title title={"Popular Movies"} />
+          <ScrollView horizontal>
+            {popular.map((movie) => (
+              <Vertical
+                key={movie.id}
+                poster={movie.poster_path}
+                title={movie.original_title}
+                votes={movie.vote_average}
+              />
+            ))}
+          </ScrollView>
+        </Container>
+      </>
+    )}
+  </ScrollView>
+);

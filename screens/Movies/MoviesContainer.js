@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
 import { movieApi } from "../../api";
 import MoviesPresenter from "./MoviesPresenter";
 
@@ -20,17 +19,15 @@ export default () => {
     setMovies({
       loading: false,
       nowPlaying,
-      nowPlayingError,
       popular,
-      popularError,
       upcoming,
+      nowPlayingError,
+      popularError,
       upcomingError,
     });
   };
-
   useEffect(() => {
     getData();
   }, []);
-
-  return <MoviesPresenter />;
+  return <MoviesPresenter {...movies} />;
 };
