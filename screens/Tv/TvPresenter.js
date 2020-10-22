@@ -3,17 +3,20 @@ import HorizontalSlider from "../../components/HorizontalSlider";
 import ScrollContainer from "../../components/ScrollContainer";
 import Vertical from "../../components/Vertical";
 import styled from "styled-components/native";
+import List from "../../components/List";
+import Horizontal from "../../components/Horizontal";
 
 const Container = styled.View`
   margin-top: 30px;
 `;
 
-export default ({ loading, popular, topRated }) => (
-  <ScrollContainer loading={loading}>
+export default ({ loading, popular, topRated, today, refreshFn }) => (
+  <ScrollContainer loading={loading} refreshFn={refreshFn}>
     <Container>
       <HorizontalSlider title={"Popular Shows"}>
         {popular.map((show) => (
           <Vertical
+            isTv={true}
             id={show.id}
             key={show.id}
             poster={show.poster_path}
@@ -25,6 +28,7 @@ export default ({ loading, popular, topRated }) => (
       <HorizontalSlider title={"Top Rated"}>
         {topRated.map((show) => (
           <Vertical
+            isTv={true}
             id={show.id}
             key={show.id}
             poster={show.poster_path}
@@ -33,6 +37,18 @@ export default ({ loading, popular, topRated }) => (
           />
         ))}
       </HorizontalSlider>
+      <List title="Airing Today">
+        {today.map((show) => (
+          <Horizontal
+            isTv={true}
+            key={show.id}
+            id={show.id}
+            title={show.name}
+            poster={show.poster_path}
+            overview={show.overview}
+          />
+        ))}
+      </List>
     </Container>
   </ScrollContainer>
 );
